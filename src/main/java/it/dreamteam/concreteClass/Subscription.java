@@ -3,9 +3,7 @@ package it.dreamteam.concreteClass;
 import it.dreamteam.abstractClass.TravelDocument;
 import it.dreamteam.enumClass.Periodicity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -13,6 +11,7 @@ import java.time.LocalDate;
 public class Subscription extends TravelDocument {
     private LocalDate expirationDate;
 
+    @Enumerated(EnumType.STRING)
     private Periodicity periodicity;
 
     @ManyToOne

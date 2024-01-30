@@ -4,10 +4,13 @@ import it.dreamteam.enumClass.ResellerMachineStatus;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("Reseller Machine")
 public class ResellerMachine extends Reseller {
+    @Enumerated(EnumType.STRING)
     private ResellerMachineStatus resellerMachineStatus;
 
     public ResellerMachine() {
