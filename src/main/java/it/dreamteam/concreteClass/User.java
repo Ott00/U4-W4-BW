@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+//@NamedQuery(name ="find_expiration",query = "SELECT a FROM User a WHERE a.id = :id")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

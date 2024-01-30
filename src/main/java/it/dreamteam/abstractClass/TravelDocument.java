@@ -11,6 +11,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "document_type")
 @NamedQuery(name = "numeropuntoemissione",query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point LIKE :emission_point AND a.emission_date=:emission_date ")
+//@NamedQuery(name ="find_expiration",query = "SELECT t FROM TravelDocument t JOIN t.card WHERE t.card_id=:card_id")
 public abstract class TravelDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

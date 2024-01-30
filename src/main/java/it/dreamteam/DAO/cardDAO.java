@@ -40,4 +40,13 @@ public class cardDAO {
             System.out.println("non trovato");
         }
     }
+
+//    public Subscription validità (long id){
+//
+////        Card found=this.findid(id);
+////        if (found!=null && found.getExpirationDate()!=null){
+////
+////
+////        }
+//    }
 }
