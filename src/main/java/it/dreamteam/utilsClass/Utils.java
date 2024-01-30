@@ -31,7 +31,7 @@ public class Utils {
     }
 
     public static Time generateRandomTime() {
-        int hour = ThreadLocalRandom.current().nextInt(0, 24);
+        int hour = ThreadLocalRandom.current().nextInt(0, 5);
         int minute = ThreadLocalRandom.current().nextInt(0, 60);
 
         return Time.valueOf(LocalTime.of(hour, minute, 0));
@@ -89,24 +89,23 @@ public class Utils {
         Supplier<Vehicle> vehicleSupplier = () -> new Vehicle(
                 getRandomEnum(VehicleType.class),
                 faker.number().numberBetween(40, 60),
-                getRandomEnum(VehicleStatus.class)
+                VehicleStatus.IN_SERVIZIO
         );
 
         //Maintenance
-        Supplier<Maintenance> maintenanceSupplier = () -> new Maintenance(
+        Vehicle vehicleInMaintenance = new Vehicle(getRandomEnum(VehicleType.class),
+                faker.number().numberBetween(40, 60),
+                VehicleStatus.IN_MANUTENZIONE);
+
+        vehicleDAO.save(vehicleInMaintenance);
+
+        Maintenance maintenance = new Maintenance(
                 LocalDate.now().plusDays(7),
                 faker.lorem().sentence(10),
-                new Vehicle(getRandomEnum(VehicleType.class),
-                        faker.number().numberBetween(40, 60),
-                        getRandomEnum(VehicleStatus.class))
+                vehicleInMaintenance
         );
 
-        //Trip
-        Supplier<Trip> tripSupplier = () -> new Trip(
-                vehicleSupplier.get(),
-                routeSupplier.get(),
-                generateRandomTime()
-        );
+        maintenanceDAO.save(maintenance);
 
         //TravelDocument
         Supplier<Ticket> ticketSupplier = () -> new Ticket(
@@ -136,16 +135,23 @@ public class Utils {
             Vehicle vehicle = vehicleSupplier.get();
             vehicleDAO.save(vehicle);
 
-            Maintenance maintenance = maintenanceSupplier.get();
-            maintenanceDAO.save(maintenance);
-
-            Trip trip = tripSupplier.get();
-            tripDAO.save(trip);
 
             TravelDocument ticket = ticketSupplier.get();
             TravelDocument subscription = subscriptionSupplier.get();
             travelDocumentDAO.save(ticket);
             travelDocumentDAO.save(subscription);
+        }
+
+        for (int j = 0; j < numberOfElement; j++) {
+            Route routeForTrip = routeSupplier.get();
+            routeDAO.save(routeForTrip);
+
+            Vehicle vehicleForTrip = vehicleSupplier.get();
+            vehicleDAO.save(vehicleForTrip);
+
+            Trip trip = new Trip(vehicleForTrip, routeForTrip, generateRandomTime());
+            tripDAO.save(trip);
+
         }
     }
 
