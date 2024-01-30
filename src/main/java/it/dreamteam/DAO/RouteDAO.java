@@ -13,7 +13,7 @@ public class RouteDAO {
         this.em = em;
     }
 
-    public void saveRoute (Route route) {
+    public void save(Route route) {
         try {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
@@ -25,19 +25,19 @@ public class RouteDAO {
         }
     }
 
-    public Route findById(long id){
-        return em.find(Route.class,id);
+    public Route findById(long id) {
+        return em.find(Route.class, id);
     }
 
-    public void deleteById(long id){
-        Route found=this.findById(id);
-        if (found != null){
-            EntityTransaction transaction= em.getTransaction();
+    public void deleteById(long id) {
+        Route found = this.findById(id);
+        if (found != null) {
+            EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.remove(found);
             transaction.commit();
             System.out.println("Itinerario n. " + id + " eliminato dal db.");
-        }else {
+        } else {
             System.out.println("Itinerario n. " + id + " non trovato.");
         }
     }

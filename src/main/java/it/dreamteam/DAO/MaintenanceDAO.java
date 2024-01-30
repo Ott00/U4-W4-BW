@@ -13,31 +13,31 @@ public class MaintenanceDAO {
         this.em = em;
     }
 
-    public void saveMaintenance (Maintenance maintenance) {
+    public void save(Maintenance maintenance) {
         try {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.persist(maintenance);
             transaction.commit();
-            System.out.println("Itinerario n. " + maintenance.getId() + " aggiunto con successo!");
+            System.out.println("Manutenzione n. " + maintenance.getId() + " aggiunta con successo!");
         } catch (TransactionalException te) {
             System.err.println(te.getMessage());
         }
     }
 
-    public Maintenance findById(long id){
-        return em.find(Maintenance.class,id);
+    public Maintenance findById(long id) {
+        return em.find(Maintenance.class, id);
     }
 
-    public void deleteById(long id){
-        Maintenance found=this.findById(id);
-        if (found != null){
-            EntityTransaction transaction= em.getTransaction();
+    public void deleteById(long id) {
+        Maintenance found = this.findById(id);
+        if (found != null) {
+            EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.remove(found);
             transaction.commit();
             System.out.println("Manutenzione n. " + id + " rimossa dal db.");
-        }else {
+        } else {
             System.out.println("Manutenzione n. " + id + " non trovata.");
         }
     }

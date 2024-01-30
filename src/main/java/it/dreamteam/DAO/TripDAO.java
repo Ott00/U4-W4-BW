@@ -13,7 +13,7 @@ public class TripDAO {
         this.em = em;
     }
 
-    public void saveTrip (Trip trip) {
+    public void save(Trip trip) {
         try {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
@@ -25,19 +25,19 @@ public class TripDAO {
         }
     }
 
-    public Trip findById(long id){
-        return em.find(Trip.class,id);
+    public Trip findById(long id) {
+        return em.find(Trip.class, id);
     }
 
-    public void deleteById(long id){
-        Trip found=this.findById(id);
-        if (found != null){
-            EntityTransaction transaction= em.getTransaction();
+    public void deleteById(long id) {
+        Trip found = this.findById(id);
+        if (found != null) {
+            EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.remove(found);
             transaction.commit();
             System.out.println("Viaggio n. " + id + " rimosso dal db.");
-        }else {
+        } else {
             System.out.println("Viaggio n. " + id + " non trovato.");
         }
     }

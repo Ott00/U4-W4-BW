@@ -1,6 +1,8 @@
 package it.dreamteam.utilsClass;
 
 import com.github.javafaker.Faker;
+import it.dreamteam.DAO.*;
+import it.dreamteam.abstractClass.TravelDocument;
 import it.dreamteam.concreteClass.*;
 import it.dreamteam.enumClass.Periodicity;
 import it.dreamteam.enumClass.ResellerMachineStatus;
@@ -39,6 +41,16 @@ public class Utils {
         EntityManager entityManager = emf.createEntityManager();
         Faker faker = new Faker(Locale.ITALY);
         Random random = new Random();
+
+        //DAO
+        CardDAO cardDAO = new CardDAO(entityManager);
+        MaintenanceDAO maintenanceDAO = new MaintenanceDAO(entityManager);
+        ResellerDAO resellerDAO = new ResellerDAO(entityManager);
+        RouteDAO routeDAO = new RouteDAO(entityManager);
+        TravelDocumentDAO travelDocumentDAO = new TravelDocumentDAO(entityManager);
+        TripDAO tripDAO = new TripDAO(entityManager);
+        UserDAO userDAO = new UserDAO(entityManager);
+        VehicleDAO vehicleDAO = new VehicleDAO(entityManager);
 
 
         //User
@@ -84,7 +96,9 @@ public class Utils {
         Supplier<Maintenance> maintenanceSupplier = () -> new Maintenance(
                 LocalDate.now().plusDays(7),
                 faker.lorem().sentence(10),
-                vehicleSupplier.get()
+                new Vehicle(getRandomEnum(VehicleType.class),
+                        faker.number().numberBetween(40, 60),
+                        getRandomEnum(VehicleStatus.class))
         );
 
         //Trip
@@ -105,7 +119,33 @@ public class Utils {
         );
 
         for (int i = 0; i < numberOfElement; i++) {
-            
+            User user = userSupplier.get();
+            userDAO.save(user);
+
+            Reseller reseller = resellerSupplier.get();
+            Reseller resellerMachine = resellerMachineSupplier.get();
+            resellerDAO.save(reseller);
+            resellerDAO.save(resellerMachine);
+
+            Card card = cardSupplier.get();
+            cardDAO.save(card);
+
+            Route route = routeSupplier.get();
+            routeDAO.save(route);
+
+            Vehicle vehicle = vehicleSupplier.get();
+            vehicleDAO.save(vehicle);
+
+            Maintenance maintenance = maintenanceSupplier.get();
+            maintenanceDAO.save(maintenance);
+
+            Trip trip = tripSupplier.get();
+            tripDAO.save(trip);
+
+            TravelDocument ticket = ticketSupplier.get();
+            TravelDocument subscription = subscriptionSupplier.get();
+            travelDocumentDAO.save(ticket);
+            travelDocumentDAO.save(subscription);
         }
     }
 
