@@ -1,19 +1,20 @@
 package it.dreamteam.DAO;
 
-import it.dreamteam.concreteClass.Reseller;
+
+import it.dreamteam.abstractClass.TravelDocument;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class ResellerDAO {
+public class TravelDocumentDAO {
 
         private final EntityManager em;
 
-        public ResellerDAO(EntityManager em) {
+        public TravelDocumentDAO(EntityManager em) {
             this.em = em;
         }
 
-        public void save(Reseller re) {
+        public void save(TravelDocument re) {
             try {
                 EntityTransaction transaction = em.getTransaction();
                 transaction.begin();
@@ -26,11 +27,11 @@ public class ResellerDAO {
             }
         }
 
-        public Reseller findid(long id){
-            return em.find(Reseller.class,id);
+        public TravelDocument findid(long id){
+            return em.find(TravelDocument.class,id);
         }
         public void delete(long id){
-            Reseller found=this.findid(id);
+            TravelDocument found=this.findid(id);
             if (found!=null){
                 EntityTransaction transaction= em.getTransaction();
                 transaction.begin();
@@ -41,5 +42,13 @@ public class ResellerDAO {
                 System.out.println("non trovato");
             }
         }
+
+//    public List<TravelDocument> findnumberticketsplace(Reseller emission_point, LocalDate emission_date) {
+//        TypedQuery<TravelDocument> query = em.createNamedQuery("numeropuntoemissione", TravelDocument.class);
+//        query.setParameter("emission_point", emission_point);
+//        query.setParameter("emission_date", emission_date);
+//        return query.getResultList();
+//
+//    }
 
     }

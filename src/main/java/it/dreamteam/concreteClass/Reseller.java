@@ -1,6 +1,9 @@
 package it.dreamteam.concreteClass;
 
+import it.dreamteam.abstractClass.TravelDocument;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "resellers")
@@ -14,6 +17,8 @@ public class Reseller {
     protected Long id;
     protected String name;
     protected String address;
+    @OneToMany(mappedBy = "emission_point")
+    protected List<TravelDocument> travelDocuments;
 
     public Reseller() {
     }
@@ -21,6 +26,14 @@ public class Reseller {
     public Reseller(String name, String address) {
         this.name = name;
         this.address = address;
+    }
+
+    public List<TravelDocument> getTravelDocuments() {
+        return travelDocuments;
+    }
+
+    public void setTravelDocuments(List<TravelDocument> travelDocuments) {
+        this.travelDocuments = travelDocuments;
     }
 
     public Long getId() {

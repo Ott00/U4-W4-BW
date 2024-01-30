@@ -1,7 +1,10 @@
 package it.dreamteam.concreteClass;
 
+import it.dreamteam.abstractClass.TravelDocument;
+
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.Set;
 
 @Entity
 @Table(name = "trips")
@@ -19,6 +22,14 @@ public class Trip {
     @JoinColumn(name = "route_id")
     private Route route;
     private Time tripTime;
+
+    @ManyToMany
+    @JoinTable(
+            name = "trip_travel_document",
+            joinColumns = @JoinColumn(name = "travelDocument_id"),
+            inverseJoinColumns = @JoinColumn(name = "trip_id")
+    )
+    private Set<TravelDocument> travelDocument;
 
     public Trip() {
     }
@@ -65,5 +76,13 @@ public class Trip {
                 ", route destination=" + route.getEndAddress() +
                 ", tripTime=" + tripTime +
                 '}';
+    }
+
+    public Set<TravelDocument> getTravelDocument() {
+        return travelDocument;
+    }
+
+    public void setTravelDocument(Set<TravelDocument> travelDocument) {
+        this.travelDocument = travelDocument;
     }
 }
