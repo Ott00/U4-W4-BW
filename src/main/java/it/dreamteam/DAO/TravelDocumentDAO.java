@@ -2,9 +2,13 @@ package it.dreamteam.DAO;
 
 
 import it.dreamteam.abstractClass.TravelDocument;
+import it.dreamteam.concreteClass.Reseller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.time.LocalDate;
+import java.util.List;
 
 public class TravelDocumentDAO {
 
@@ -43,12 +47,14 @@ public class TravelDocumentDAO {
             }
         }
 
-//    public List<TravelDocument> findnumberticketsplace(Reseller emission_point, LocalDate emission_date) {
-//        TypedQuery<TravelDocument> query = em.createNamedQuery("numeropuntoemissione", TravelDocument.class);
-//        query.setParameter("emission_point", emission_point);
-//        query.setParameter("emission_date", emission_date);
-//        return query.getResultList();
-//
-//    }
+    public List<TravelDocument> findnumberticketsplace(Reseller emission_point, LocalDate emission_date) {
+        TypedQuery<TravelDocument> query = em.createNamedQuery("numeropuntoemissione", TravelDocument.class);
+        query.setParameter("emission_point", emission_point);
+        query.setParameter("emission_date", emission_date);
+        return query.getResultList();
 
     }
+
+
+
+}
