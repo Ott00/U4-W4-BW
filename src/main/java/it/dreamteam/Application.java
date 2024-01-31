@@ -1,16 +1,14 @@
 package it.dreamteam;
 
-import it.dreamteam.DAO.ResellerDAO;
-import it.dreamteam.DAO.TravelDocumentDAO;
-import it.dreamteam.DAO.TripDAO;
+import it.dreamteam.DAO.*;
 import it.dreamteam.abstractClass.TravelDocument;
+import it.dreamteam.concreteClass.Trip;
 import it.dreamteam.utilsClass.Utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.List;
 
 public class Application {
 
@@ -21,7 +19,8 @@ public class Application {
         EntityManager em = emf.createEntityManager();
         TravelDocumentDAO td = new TravelDocumentDAO(em);
         ResellerDAO rd = new ResellerDAO(em);
-        TripDAO tr=new TripDAO(em);
+        TripDAO tr = new TripDAO(em);
+        VehicleDAO vd = new VehicleDAO(em);
 
         System.out.println("Creo il DB!");
         Utils.createDatabase(10);
@@ -48,15 +47,14 @@ public class Application {
         System.out.println(td.numberOfTicketObliteratedInAVehicle(3));
         System.out.println(td.numberOfTicketObliteratedInAVehicle(5));
         System.out.println();
-        List<Object[]> resultList = tr.timeTrip(3);
-        for (Object[] result : resultList) {
-            Time tripTime = (Time) result[0]; // Ottieni il tempo del viaggio
-            Long tripCount = (Long) result[1]; // Ottieni il conteggio dei viaggi
 
-            System.out.println("Tempo del viaggio: " + tripTime + ", Conteggio dei viaggi: " + tripCount);
-        }
-
-
+        TripDAO tripDAO = new TripDAO(em);
+        RouteDAO routeDAO = new RouteDAO(em);
+        Trip trip = new Trip(vd.findById(3), routeDAO.findById(2), new java.sql.Time(2, 3, 3));
+        tripDAO.save(trip);
+        System.out.println("Numero di volte che un mezzo percorre una tratta e del tempo effettivo di percorrenza di ogni tratta");
+        tr.timeTrip(3).forEach(result -> System.out.println("Tempo del viaggio: " + result[0] + ", Conteggio dei viaggi: " + result[1]));
+        tr.timeTrip(5).forEach(result -> System.out.println("Tempo del viaggio: " + result[0] + ", Conteggio dei viaggi: " + result[1]));
 
         em.close();
         emf.close();

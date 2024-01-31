@@ -44,9 +44,9 @@ public class TripDAO {
         }
     }
 
-    public List<Object[]> timeTrip(long id) {
+    public List<Object[]> timeTrip(long vehicle_id) {
         TypedQuery<Object[]> query = em.createNamedQuery("timeTrip", Object[].class);
-        query.setParameter("id", id);
+        query.setParameter("id", vehicle_id);
         return query.getResultList();
 
     }
