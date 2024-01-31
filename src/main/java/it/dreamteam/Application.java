@@ -2,6 +2,7 @@ package it.dreamteam;
 
 import it.dreamteam.DAO.ResellerDAO;
 import it.dreamteam.DAO.TravelDocumentDAO;
+import it.dreamteam.abstractClass.TravelDocument;
 import it.dreamteam.utilsClass.Utils;
 
 import javax.persistence.EntityManager;
@@ -32,6 +33,18 @@ public class Application {
         System.out.println(td.findNumberTicketsPlace(rd.findById(1), LocalDate.of(2024, 10, 1)));
         System.out.println();
 
+        System.out.println("Numero di biglietti vidimati su un particolare mezzo o in totale in un periodo di tempo");
+
+        //Oblitero dei ticket manualmente per verificare la query
+        TravelDocument ticket = td.findid(2);
+        td.obliterateTicket(ticket);
+
+        TravelDocument ticket2 = td.findid(4);
+        td.obliterateTicket(ticket2);
+
+        System.out.println(td.numberOfTicketObliteratedInAVehicle(3));
+        System.out.println(td.numberOfTicketObliteratedInAVehicle(5));
+        System.out.println();
 
         em.close();
         emf.close();

@@ -102,15 +102,15 @@ public class Utils {
 
         maintenanceDAO.save(maintenance);
 
-        User user1=userSupplier.get();
+        User user1 = userSupplier.get();
         userDAO.save(user1);
 
-        Card card1=new Card(LocalDate.of(2023,10,4), user1);
+        Card card1 = new Card(LocalDate.of(2023, 10, 4), user1);
         cardDAO.save(card1);
         Reseller reseller1 = resellerSupplier.get();
         resellerDAO.save(reseller1);
 
-        TravelDocument travelDocument1=new Subscription(
+        TravelDocument travelDocument1 = new Subscription(
                 reseller1,
                 getRandomEnum(Periodicity.class),
                 card1
@@ -118,7 +118,7 @@ public class Utils {
         travelDocumentDAO.save(travelDocument1);
 
 
-        for (int j = 0; j < numberOfElement; j++) {
+        for (int j = 0; j < 2; j++) {
             Reseller reseller = resellerSupplier.get();
             Reseller resellerMachine = resellerMachineSupplier.get();
             resellerDAO.save(reseller);
@@ -150,7 +150,6 @@ public class Utils {
                     card
             );
 
-
             Route routeForTrip = routeSupplier.get();
             routeDAO.save(routeForTrip);
 
@@ -162,10 +161,10 @@ public class Utils {
 
             subscription.getTrips().add(trip);
             ticket.getTrips().add(trip);
+
             travelDocumentDAO.save(ticket);
             travelDocumentDAO.save(subscription);
+
         }
     }
-
-
 }

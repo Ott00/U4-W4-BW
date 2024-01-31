@@ -11,9 +11,9 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "document_type")
-@NamedQuery(name = "findExpCard", query = "SELECT t FROM TravelDocument t JOIN t.card c WHERE t.card.id = :card_id AND (c.expirationDate < NOW() OR t.expirationDate < NOW())")
-@NamedQuery(name = "numeroPuntoEmissione", query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point = :emission_point AND a.emission_date < :emission_date ")
-
+@NamedQuery(name = "findExpCard", query = "SELECT t FROM TravelDocument t JOIN t.card c WHERE t.card.id = :card_id AND (c.expirationDate < CURRENT_DATE OR t.expirationDate < CURRENT_DATE)")
+@NamedQuery(name = "numberEmissionPoint", query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point = :emission_point AND a.emission_date < :emission_date ")
+@NamedQuery(name = "numberOfTicketObliteratedInAVehicle", query = "SELECT COUNT(td) FROM TravelDocument td JOIN td.trips t JOIN t.vehicle v WHERE v.id = :vehicle_id AND td.obliterated = true")
 public abstract class TravelDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,10 @@ public abstract class TravelDocument {
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "trip_travel_document",
-            joinColumns = @JoinColumn(name = "trip_id"),
-            inverseJoinColumns = @JoinColumn(name = "travelDocument_id")
+            joinColumns = @JoinColumn(name = "travelDocument_id"),
+            inverseJoinColumns = @JoinColumn(name = "trip_id")
     )
-    private Set<Trip> trips=new HashSet<>();
+    private Set<Trip> trips = new HashSet<>();
 
 
     public TravelDocument() {
@@ -74,4 +74,6 @@ public abstract class TravelDocument {
     public void setTrips(Set<Trip> trips) {
         this.trips = trips;
     }
+
+
 }

@@ -3,6 +3,7 @@ package it.dreamteam.DAO;
 
 import it.dreamteam.abstractClass.TravelDocument;
 import it.dreamteam.concreteClass.Reseller;
+import it.dreamteam.concreteClass.Ticket;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -50,8 +51,22 @@ public class TravelDocumentDAO {
         }
     }
 
+    public void obliterateTicket(TravelDocument ticket) {
+        TravelDocument found = this.findid(ticket.getId());
+        if (found instanceof Ticket) {
+            EntityTransaction transaction = em.getTransaction();
+
+            transaction.begin();
+            ((Ticket) found).setObliterated(true);
+            em.merge(found);
+            transaction.commit();
+
+            System.out.println("Ticket obliterato");
+        } else System.out.println("Gli abbonamenti non possono essere obliterati!");
+    }
+
     public Long findNumberTicketsPlace(Reseller emission_point, LocalDate emission_date) {
-        TypedQuery<Long> query = em.createNamedQuery("numeroPuntoEmissione", Long.class);
+        TypedQuery<Long> query = em.createNamedQuery("numberEmissionPoint", Long.class);
         query.setParameter("emission_point", emission_point);
         query.setParameter("emission_date", emission_date);
         return query.getSingleResult();
@@ -62,7 +77,12 @@ public class TravelDocumentDAO {
         TypedQuery<TravelDocument> query = em.createNamedQuery("findExpCard", TravelDocument.class);
         query.setParameter("card_id", id);
         return query.getResultList();
+    }
 
+    public Long numberOfTicketObliteratedInAVehicle(long vehicle_id) {
+        TypedQuery<Long> query = em.createNamedQuery("numberOfTicketObliteratedInAVehicle", Long.class);
+        query.setParameter("vehicle_id", vehicle_id);
+        return query.getSingleResult();
     }
 
 }

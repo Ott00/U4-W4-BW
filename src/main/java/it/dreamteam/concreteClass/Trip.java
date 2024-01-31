@@ -28,10 +28,10 @@ public class Trip {
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "trip_travel_document",
-            joinColumns = @JoinColumn(name = "travelDocument_id"),
-            inverseJoinColumns = @JoinColumn(name = "trip_id")
+            joinColumns = @JoinColumn(name = "trip_id"),
+            inverseJoinColumns = @JoinColumn(name = "travelDocument_id")
     )
-    private Set<TravelDocument> travelDocument=new HashSet<>();
+    private Set<TravelDocument> travelDocument = new HashSet<>();
 
     public Trip() {
     }
