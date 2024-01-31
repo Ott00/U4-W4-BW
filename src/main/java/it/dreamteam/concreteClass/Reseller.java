@@ -10,11 +10,15 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "reseller_type")
 @DiscriminatorValue("Authorized Reseller")
+//@NamedQuery(
+//        name = "numeroPuntoEmissione",
+//        query = "SELECT COUNT(t) FROM TravelDocument t WHERE t.emission_point.id = :id AND t.emission_date <= :emission_date"
+//)
 public class Reseller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    protected Long id;
+    private Long id;
     protected String name;
     protected String address;
     @OneToMany(mappedBy = "emission_point")

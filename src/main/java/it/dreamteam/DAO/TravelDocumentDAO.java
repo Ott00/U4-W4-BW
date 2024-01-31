@@ -2,7 +2,6 @@ package it.dreamteam.DAO;
 
 
 import it.dreamteam.abstractClass.TravelDocument;
-import it.dreamteam.concreteClass.Reseller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -49,7 +48,7 @@ public class TravelDocumentDAO {
             }
         }
 
-    public List<TravelDocument> findnumberticketsplace(Reseller emission_point, LocalDate emission_date) {
+    public List<TravelDocument> findNumberTicketsPlace(long emission_point, LocalDate emission_date) {
         TypedQuery<TravelDocument> query = em.createNamedQuery("numeroPuntoEmissione", TravelDocument.class);
         query.setParameter("emission_point", emission_point);
         query.setParameter("emission_date", emission_date);

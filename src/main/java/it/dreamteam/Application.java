@@ -1,11 +1,13 @@
 package it.dreamteam;
 
+import it.dreamteam.DAO.ResellerDAO;
 import it.dreamteam.DAO.TravelDocumentDAO;
 import it.dreamteam.utilsClass.Utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.time.LocalDate;
 
 public class Application {
 
@@ -15,12 +17,15 @@ public class Application {
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
         TravelDocumentDAO td= new TravelDocumentDAO(em);
+        ResellerDAO rd=new ResellerDAO(em);
 
 
         Utils.createDatabase(10);
 
 
         td.findExpCard(1).forEach(System.out::println);
+        td.findNumberTicketsPlace(1, LocalDate.of(2024,10,1)).forEach(System.out::println);
+
 
         em.close();
         emf.close();

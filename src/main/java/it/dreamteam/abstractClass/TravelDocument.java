@@ -10,8 +10,9 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "document_type")
-@NamedQuery(name = "numeroPuntoEmissione",query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point LIKE :emission_point AND a.emission_date=:emission_date ")
 @NamedQuery(name = "findExpCard", query = "SELECT t FROM TravelDocument t JOIN t.card c WHERE t.card.id = :card_id AND (c.expirationDate < NOW() OR t.expirationDate < NOW())")
+@NamedQuery(name = "numeroPuntoEmissione",query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point = :emission_point AND a.emission_date <= :emission_date ")
+
 public abstract class TravelDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

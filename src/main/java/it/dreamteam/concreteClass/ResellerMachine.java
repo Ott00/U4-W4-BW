@@ -33,7 +33,7 @@ public class ResellerMachine extends Reseller {
     public String toString() {
         return "ResellerMachine{" +
                 "resellerMachineStatus=" + resellerMachineStatus +
-                ", id=" + id +
+                ", id=" + getId() +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 '}';
