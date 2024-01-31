@@ -2,6 +2,7 @@ package it.dreamteam;
 
 import it.dreamteam.DAO.ResellerDAO;
 import it.dreamteam.DAO.TravelDocumentDAO;
+import it.dreamteam.DAO.TripDAO;
 import it.dreamteam.abstractClass.TravelDocument;
 import it.dreamteam.utilsClass.Utils;
 
@@ -9,16 +10,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Application {
 
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("transport");
 
 
-    public static void main(String[] args) {
+    public static <Time> void main(String[] args) {
         EntityManager em = emf.createEntityManager();
         TravelDocumentDAO td = new TravelDocumentDAO(em);
         ResellerDAO rd = new ResellerDAO(em);
+        TripDAO tr=new TripDAO(em);
 
         System.out.println("Creo il DB!");
         Utils.createDatabase(10);
@@ -45,6 +48,15 @@ public class Application {
         System.out.println(td.numberOfTicketObliteratedInAVehicle(3));
         System.out.println(td.numberOfTicketObliteratedInAVehicle(5));
         System.out.println();
+        List<Object[]> resultList = tr.timeTrip(3);
+        for (Object[] result : resultList) {
+            Time tripTime = (Time) result[0]; // Ottieni il tempo del viaggio
+            Long tripCount = (Long) result[1]; // Ottieni il conteggio dei viaggi
+
+            System.out.println("Tempo del viaggio: " + tripTime + ", Conteggio dei viaggi: " + tripCount);
+        }
+
+
 
         em.close();
         emf.close();

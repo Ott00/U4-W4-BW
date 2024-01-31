@@ -4,7 +4,9 @@ import it.dreamteam.concreteClass.Trip;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import javax.transaction.TransactionalException;
+import java.util.List;
 
 public class TripDAO {
     EntityManager em;
@@ -40,6 +42,13 @@ public class TripDAO {
         } else {
             System.out.println("Viaggio n. " + id + " non trovato.");
         }
+    }
+
+    public List<Object[]> timeTrip(long id) {
+        TypedQuery<Object[]> query = em.createNamedQuery("timeTrip", Object[].class);
+        query.setParameter("id", id);
+        return query.getResultList();
+
     }
 
 
