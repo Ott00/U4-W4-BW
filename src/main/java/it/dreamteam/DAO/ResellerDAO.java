@@ -18,7 +18,7 @@ public class ResellerDAO {
             transaction.begin();
             em.persist(re);
             transaction.commit();
-            System.out.println("aggiunto");
+            System.out.println("aggiunto reseller "+ re.getId());
         } catch (Exception e) {
             em.getTransaction().rollback();
             System.out.println(e.getMessage());

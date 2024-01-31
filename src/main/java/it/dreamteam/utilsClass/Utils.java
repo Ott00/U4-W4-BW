@@ -102,6 +102,21 @@ public class Utils {
 
         maintenanceDAO.save(maintenance);
 
+        User user1=userSupplier.get();
+        userDAO.save(user1);
+
+        Card card1=new Card(LocalDate.of(2023,10,4), user1);
+        cardDAO.save(card1);
+        Reseller reseller1 = resellerSupplier.get();
+        resellerDAO.save(reseller1);
+
+        TravelDocument travelDocument1=new Subscription(
+                reseller1,
+                getRandomEnum(Periodicity.class),
+                card1
+        );
+        travelDocumentDAO.save(travelDocument1);
+
 
         for (int j = 0; j < numberOfElement; j++) {
             Reseller reseller = resellerSupplier.get();

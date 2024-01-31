@@ -24,12 +24,14 @@ public class TravelDocumentDAO {
                 transaction.begin();
                 em.persist(re);
                 transaction.commit();
-                System.out.println("aggiunto");
+                System.out.println("aggiunto document " + re.getId() );
             } catch (Exception e) {
                 em.getTransaction().rollback();
-                System.out.println(e.getMessage());
+//                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
+
 
         public TravelDocument findid(long id){
             return em.find(TravelDocument.class,id);
@@ -48,9 +50,15 @@ public class TravelDocumentDAO {
         }
 
     public List<TravelDocument> findnumberticketsplace(Reseller emission_point, LocalDate emission_date) {
-        TypedQuery<TravelDocument> query = em.createNamedQuery("numeropuntoemissione", TravelDocument.class);
+        TypedQuery<TravelDocument> query = em.createNamedQuery("numeroPuntoEmissione", TravelDocument.class);
         query.setParameter("emission_point", emission_point);
         query.setParameter("emission_date", emission_date);
+        return query.getResultList();
+
+    }
+    public List<TravelDocument> findExpCard(long id) {
+        TypedQuery<TravelDocument> query = em.createNamedQuery("findExpCard", TravelDocument.class);
+        query.setParameter("card_id", id);
         return query.getResultList();
 
     }

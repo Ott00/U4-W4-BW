@@ -18,7 +18,7 @@ public class UserDAO {
             transaction.begin();
             em.persist(ur);
             transaction.commit();
-            System.out.println("aggiunto");
+            System.out.println("aggiunto user"+ ur.getId());
         } catch (Exception e) {
             em.getTransaction().rollback();
             System.out.println(e.getMessage());

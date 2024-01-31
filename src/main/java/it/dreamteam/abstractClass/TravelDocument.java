@@ -10,7 +10,8 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "document_type")
-@NamedQuery(name = "numeropuntoemissione", query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point LIKE :emission_point AND a.emission_date=:emission_date ")
+@NamedQuery(name = "numeroPuntoEmissione",query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point LIKE :emission_point AND a.emission_date=:emission_date ")
+@NamedQuery(name = "findExpCard", query = "SELECT t FROM TravelDocument t JOIN t.card c WHERE t.card.id = :card_id AND (c.expirationDate < NOW() OR t.expirationDate < NOW())")
 public abstract class TravelDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +20,7 @@ public abstract class TravelDocument {
 
     protected LocalDate emission_date;
     @ManyToOne
-    @JoinColumn(name = "emission_point")
+    @JoinColumn(name="emission_point")
     protected Reseller emission_point;
 
     @ManyToMany
@@ -30,12 +31,21 @@ public abstract class TravelDocument {
     )
     private Set<Trip> trips;
 
+
+
+    public TravelDocument() {
+    }
     public TravelDocument(Reseller emission_point) {
         this.emission_date = LocalDate.now();
         this.emission_point = emission_point;
     }
 
-    public TravelDocument() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setEmission_point(Reseller emission_point) {

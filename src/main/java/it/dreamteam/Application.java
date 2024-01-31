@@ -1,5 +1,6 @@
 package it.dreamteam;
 
+import it.dreamteam.DAO.TravelDocumentDAO;
 import it.dreamteam.utilsClass.Utils;
 
 import javax.persistence.EntityManager;
@@ -13,8 +14,13 @@ public class Application {
 
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
+        TravelDocumentDAO td= new TravelDocumentDAO(em);
+
 
         Utils.createDatabase(10);
+
+
+        td.findExpCard(1).forEach(System.out::println);
 
         em.close();
         emf.close();

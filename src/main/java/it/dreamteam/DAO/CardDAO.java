@@ -18,7 +18,7 @@ public class CardDAO {
             transaction.begin();
             em.persist(cr);
             transaction.commit();
-            System.out.println("aggiunto");
+            System.out.println("aggiunto card "+ cr.getId());
         } catch (Exception e) {
             em.getTransaction().rollback();
             System.out.println(e.getMessage());

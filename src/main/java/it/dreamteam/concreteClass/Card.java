@@ -28,6 +28,13 @@ public class Card {
         this.user = user;
     }
 
+    //devo inserire almeno una card scaduta per farla comparire nella query, perciò devo creare un nuovo costruttore e inserire
+    //la scadenza a mano
+    public Card(LocalDate expirationDate, User user) {
+        this.expirationDate = expirationDate;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

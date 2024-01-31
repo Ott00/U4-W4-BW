@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-
 public class Subscription extends TravelDocument {
     private LocalDate expirationDate;
 

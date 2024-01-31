@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "trips")
+//@NamedQuery(name = "ticketveicolo",query = "SELECT COUNT(t.travelDocument.obliterated) FROM Trip WHERE t.travelDocument.obliterated = true ")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
