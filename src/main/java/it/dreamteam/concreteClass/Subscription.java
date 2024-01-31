@@ -21,7 +21,8 @@ public class Subscription extends TravelDocument {
     public Subscription() {
     }
 
-    public Subscription(Periodicity periodicity, Card card) {
+    public Subscription(Reseller emission_point, Periodicity periodicity, Card card) {
+        super(emission_point);
         this.expirationDate = periodicity == Periodicity.MENSILE ? LocalDate.now().plusMonths(1) : LocalDate.now().plusWeeks(1);
         this.periodicity = periodicity;
         this.card = card;

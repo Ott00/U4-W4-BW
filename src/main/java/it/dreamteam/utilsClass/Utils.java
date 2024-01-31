@@ -73,11 +73,6 @@ public class Utils {
                 getRandomEnum(ResellerMachineStatus.class)
         );
 
-        //Card
-        Supplier<Card> cardSupplier = () -> new Card(
-                userSupplier.get()
-        );
-
         //Route
         Supplier<Route> routeSupplier = () -> new Route(
                 faker.address().fullAddress(),
@@ -107,27 +102,12 @@ public class Utils {
 
         maintenanceDAO.save(maintenance);
 
-        //TravelDocument
-        Supplier<Ticket> ticketSupplier = () -> new Ticket(
-                false,
-                userSupplier.get()
-        );
-        Supplier<Subscription> subscriptionSupplier = () -> new Subscription(
-                getRandomEnum(Periodicity.class),
-                cardSupplier.get()
-        );
 
-        for (int i = 0; i < numberOfElement; i++) {
-            User user = userSupplier.get();
-            userDAO.save(user);
-
+        for (int j = 0; j < numberOfElement; j++) {
             Reseller reseller = resellerSupplier.get();
             Reseller resellerMachine = resellerMachineSupplier.get();
             resellerDAO.save(reseller);
             resellerDAO.save(resellerMachine);
-
-            Card card = cardSupplier.get();
-            cardDAO.save(card);
 
             Route route = routeSupplier.get();
             routeDAO.save(route);
@@ -135,14 +115,28 @@ public class Utils {
             Vehicle vehicle = vehicleSupplier.get();
             vehicleDAO.save(vehicle);
 
+            //User Subscription
+            User user = userSupplier.get();
+            userDAO.save(user);
 
-            TravelDocument ticket = ticketSupplier.get();
-            TravelDocument subscription = subscriptionSupplier.get();
+            //User Ticket
+            User user2 = userSupplier.get();
+            userDAO.save(user2);
+
+            //Card
+            Card card = new Card(user);
+            cardDAO.save(card);
+
+            TravelDocument ticket = new Ticket(reseller, user2);
             travelDocumentDAO.save(ticket);
-            travelDocumentDAO.save(subscription);
-        }
 
-        for (int j = 0; j < numberOfElement; j++) {
+            TravelDocument subscription = new Subscription(
+                    reseller,
+                    getRandomEnum(Periodicity.class),
+                    card
+            );
+            travelDocumentDAO.save(subscription);
+
             Route routeForTrip = routeSupplier.get();
             routeDAO.save(routeForTrip);
 
@@ -151,7 +145,6 @@ public class Utils {
 
             Trip trip = new Trip(vehicleForTrip, routeForTrip, generateRandomTime());
             tripDAO.save(trip);
-
         }
     }
 
