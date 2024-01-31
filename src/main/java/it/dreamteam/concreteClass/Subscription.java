@@ -3,15 +3,14 @@ package it.dreamteam.concreteClass;
 import it.dreamteam.abstractClass.TravelDocument;
 import it.dreamteam.enumClass.Periodicity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 public class Subscription extends TravelDocument {
     private LocalDate expirationDate;
 
+    @Enumerated(EnumType.STRING)
     private Periodicity periodicity;
 
     @ManyToOne
@@ -21,7 +20,8 @@ public class Subscription extends TravelDocument {
     public Subscription() {
     }
 
-    public Subscription(Periodicity periodicity, Card card) {
+    public Subscription(Reseller emission_point, Periodicity periodicity, Card card) {
+        super(emission_point);
         this.expirationDate = periodicity == Periodicity.MENSILE ? LocalDate.now().plusMonths(1) : LocalDate.now().plusWeeks(1);
         this.periodicity = periodicity;
         this.card = card;

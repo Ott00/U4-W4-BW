@@ -16,9 +16,11 @@ public class Ticket extends TravelDocument {
     public Ticket() {
     }
 
-    public Ticket(boolean obliterated, User user) {
-        this.obliterated = obliterated;
+    public Ticket(Reseller emission_point, User user) {
+        super(emission_point);
+        this.obliterated = false;
         this.user = user;
+
     }
 
     public boolean isObliterated() {
