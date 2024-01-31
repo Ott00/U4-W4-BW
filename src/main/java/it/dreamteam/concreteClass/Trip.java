@@ -4,6 +4,7 @@ import it.dreamteam.abstractClass.TravelDocument;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,13 +25,13 @@ public class Trip {
     private Route route;
     private Time tripTime;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "trip_travel_document",
             joinColumns = @JoinColumn(name = "travelDocument_id"),
             inverseJoinColumns = @JoinColumn(name = "trip_id")
     )
-    private Set<TravelDocument> travelDocument;
+    private Set<TravelDocument> travelDocument=new HashSet<>();
 
     public Trip() {
     }

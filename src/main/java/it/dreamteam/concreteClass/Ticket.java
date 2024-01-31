@@ -16,6 +16,7 @@ public class Ticket extends TravelDocument {
     public Ticket() {
     }
 
+
     public Ticket(Reseller emission_point, User user) {
         super(emission_point);
         this.obliterated = false;

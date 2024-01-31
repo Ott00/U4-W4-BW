@@ -143,14 +143,13 @@ public class Utils {
             cardDAO.save(card);
 
             TravelDocument ticket = new Ticket(reseller, user2);
-            travelDocumentDAO.save(ticket);
 
             TravelDocument subscription = new Subscription(
                     reseller,
                     getRandomEnum(Periodicity.class),
                     card
             );
-            travelDocumentDAO.save(subscription);
+
 
             Route routeForTrip = routeSupplier.get();
             routeDAO.save(routeForTrip);
@@ -160,6 +159,11 @@ public class Utils {
 
             Trip trip = new Trip(vehicleForTrip, routeForTrip, generateRandomTime());
             tripDAO.save(trip);
+
+            subscription.getTrips().add(trip);
+            ticket.getTrips().add(trip);
+            travelDocumentDAO.save(ticket);
+            travelDocumentDAO.save(subscription);
         }
     }
 

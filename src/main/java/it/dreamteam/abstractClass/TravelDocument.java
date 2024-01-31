@@ -5,6 +5,7 @@ import it.dreamteam.concreteClass.Trip;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,17 +25,18 @@ public abstract class TravelDocument {
     @JoinColumn(name = "emission_point")
     protected Reseller emission_point;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "trip_travel_document",
             joinColumns = @JoinColumn(name = "trip_id"),
             inverseJoinColumns = @JoinColumn(name = "travelDocument_id")
     )
-    private Set<Trip> trips;
+    private Set<Trip> trips=new HashSet<>();
 
 
     public TravelDocument() {
     }
+
 
     public TravelDocument(Reseller emission_point) {
         this.emission_date = LocalDate.now();
