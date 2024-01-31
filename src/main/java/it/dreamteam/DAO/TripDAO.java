@@ -50,6 +50,12 @@ public class TripDAO {
         return query.getResultList();
 
     }
+    public Long Tripnumber(long vehicle_id) {
+        TypedQuery<Long> query = em.createNamedQuery("Tripnumber", Long.class);
+        query.setParameter("id", vehicle_id);
+        return query.getSingleResult();
+
+    }
 
 
 }

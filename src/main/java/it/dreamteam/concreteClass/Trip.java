@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "trips")
-@NamedQuery(name = "timeTrip", query = "SELECT AVG(t.tripTime),COUNT(t) FROM Trip t WHERE t.vehicle.id = :id")
+@NamedQuery(name="timeTrip", query = "SELECT t.tripTime,t.vehicle.id FROM Trip t WHERE t.vehicle.id=:id ")
+@NamedQuery(name="Tripnumber", query = "SELECT COUNT(t) FROM Trip t WHERE t.vehicle.id=:id ")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

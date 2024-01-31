@@ -53,9 +53,10 @@ public class Application {
         Trip trip = new Trip(vd.findById(3), routeDAO.findById(2), new java.sql.Time(2, 3, 3));
         tripDAO.save(trip);
         System.out.println("Numero di volte che un mezzo percorre una tratta e del tempo effettivo di percorrenza di ogni tratta");
-        tr.timeTrip(3).forEach(result -> System.out.println("Tempo del viaggio: " + result[0] + ", Conteggio dei viaggi: " + result[1]));
-        tr.timeTrip(5).forEach(result -> System.out.println("Tempo del viaggio: " + result[0] + ", Conteggio dei viaggi: " + result[1]));
+        tr.timeTrip(3).forEach(result -> System.out.println("Tempo del viaggio: " + result[0] + ", ID veicolo: " + result[1]));
+        tr.timeTrip(5).forEach(result -> System.out.println("Tempo del viaggio: " + result[0] + ", ID veicolo: " + result[1]));
 
+        System.out.println(tr.Tripnumber(3));
         em.close();
         emf.close();
 
