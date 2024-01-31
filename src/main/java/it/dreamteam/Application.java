@@ -16,15 +16,21 @@ public class Application {
 
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
-        TravelDocumentDAO td= new TravelDocumentDAO(em);
-        ResellerDAO rd=new ResellerDAO(em);
+        TravelDocumentDAO td = new TravelDocumentDAO(em);
+        ResellerDAO rd = new ResellerDAO(em);
 
-
+        System.out.println("Creo il DB!");
         Utils.createDatabase(10);
 
+        System.out.println("**Test Query**");
 
+        System.out.println("Verifica rapida della validità di un abbonamento in base al numero di tessera dell'utente controllato");
         td.findExpCard(1).forEach(System.out::println);
-        td.findNumberTicketsPlace(1, LocalDate.of(2024,10,1)).forEach(System.out::println);
+        System.out.println();
+
+        System.out.println("Numero di biglietti e/o abbonamenti emessi in un dato periodo di tempo in totale e per punto di emissione");
+        System.out.println(td.findNumberTicketsPlace(rd.findid(1), LocalDate.of(2024, 10, 1)).toString());
+        System.out.println();
 
 
         em.close();
