@@ -13,6 +13,7 @@ public class Subscription extends TravelDocument {
     @Enumerated(EnumType.STRING)
     private Periodicity periodicity;
 
+    //molti abbonamenti possono essere associati ad una card
     @ManyToOne
     @JoinColumn(name = "card_id")
     private Card card;

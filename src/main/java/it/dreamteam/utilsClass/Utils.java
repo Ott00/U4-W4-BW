@@ -102,11 +102,13 @@ public class Utils {
 
         maintenanceDAO.save(maintenance);
 
+        //card scaduta test
         User user1 = userSupplier.get();
         userDAO.save(user1);
 
         Card card1 = new Card(LocalDate.of(2023, 10, 4), user1);
         cardDAO.save(card1);
+
         Reseller reseller1 = resellerSupplier.get();
         resellerDAO.save(reseller1);
 

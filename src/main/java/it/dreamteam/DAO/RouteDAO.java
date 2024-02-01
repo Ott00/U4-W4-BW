@@ -7,7 +7,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.transaction.TransactionalException;
 import java.util.List;
-import java.util.Objects;
 
 public class RouteDAO {
     EntityManager em;
@@ -45,6 +44,8 @@ public class RouteDAO {
         }
     }
 
+    //il valore di ritorno di questa lista sarà un array di oggetti dato che non mi interessa tutta la
+    // tabella Route ma solo alcune colonne
     public List<Object[]> findAllRoutes() {
         TypedQuery<Object[]> query = em.createNamedQuery("findAllRoutes", Object[].class);
         return query.getResultList();

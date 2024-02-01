@@ -63,6 +63,24 @@ public class TravelDocumentDAO {
         }
     }
 
+
+    //questo metodo va a cambiarmi il valore nel db del ticket da false a true
+    public void obliterateTicket(TravelDocument ticket) {
+        TravelDocument found = this.findById(ticket.getId());
+        if (found instanceof Ticket) {
+            EntityTransaction transaction = em.getTransaction();
+            transaction.begin();
+            //ho bisogno di un cast dato che found è un traveldocument
+            ((Ticket) found).setObliterated(true);
+            em.merge(found);
+            transaction.commit();
+
+            System.out.println("Ticket obliterato");
+        } else System.out.println("Gli abbonamenti non possono essere obliterati!");
+    }
+
+    //questo metodo controlla nell'if se ticket(un traveldocument) è di tipo Ticket, se si allora mi vaso a prendere
+    //il valore del ticket oblitereted, se non è ancora stato obliterato allora entra in gioco obliterateTicket(ticket)
     public void checkIfObliteratedAndObliterate(TravelDocument ticket) {
         if (ticket instanceof Ticket) {
             boolean obliterated = ((Ticket) ticket).isObliterated();
@@ -73,26 +91,13 @@ public class TravelDocumentDAO {
         }
     }
 
-    public void obliterateTicket(TravelDocument ticket) {
-        TravelDocument found = this.findById(ticket.getId());
-        if (found instanceof Ticket) {
-            EntityTransaction transaction = em.getTransaction();
-
-            transaction.begin();
-            ((Ticket) found).setObliterated(true);
-            em.merge(found);
-            transaction.commit();
-
-            System.out.println("Ticket obliterato");
-        } else System.out.println("Gli abbonamenti non possono essere obliterati!");
-    }
-
     public void checkCardOrSubscriptionExpired(Card card) {
         if (findExpCard(card.getId()).isEmpty()) {
             System.out.println("Benvenuto a bordo");
         } else System.out.println("Il tuo abbonamento o la tessera sono scaduti!");
     }
 
+    //il valore di ritorno sarà un Long perchè io sto cercando il count quindi solo un numero
     public Long findNumberTicketsPlace(Reseller emission_point, LocalDate emission_date) {
         TypedQuery<Long> query = em.createNamedQuery("numberEmissionPoint", Long.class);
         query.setParameter("emission_point", emission_point);

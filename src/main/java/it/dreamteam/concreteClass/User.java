@@ -6,7 +6,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-//@NamedQuery(name ="find_expiration",query = "SELECT a FROM User a WHERE a.id = :id")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +16,12 @@ public class User {
     private String surname;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    //uno user può avere molte tessere
     @OneToMany(mappedBy = "user")
     private List<Card> cards;
+
+    //uno user può avere molti ticket
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
 

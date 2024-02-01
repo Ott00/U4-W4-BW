@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "routes")
+//seleziona l'id e la stazione finale e le ordina in ordine crescente
 @NamedQuery(name = "findAllRoutes", query = "SELECT r.id, r.endAddress FROM Route r ORDER BY r.id ASC")
 public class Route {
     @Id
@@ -19,6 +20,8 @@ public class Route {
     private String endAddress;
     @Column(name = "average_time")
     private Time averageTime;
+
+    //una rotta può essere percorsa molte volte(trips)
     @OneToMany(mappedBy = "route")
     private List<Trip> trips;
 

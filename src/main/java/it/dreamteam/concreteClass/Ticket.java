@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Ticket extends TravelDocument {
     private boolean obliterated;
+
+    //una persona può possedere più di un biglietto
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

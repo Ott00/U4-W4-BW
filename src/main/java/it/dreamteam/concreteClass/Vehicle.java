@@ -20,8 +20,12 @@ public class Vehicle {
     @Column(name = "vehicle_status")
     @Enumerated(EnumType.STRING)
     private VehicleStatus vehicleStatus;
+
+    //un veicolo può essere stato in manuntenzione più volte
     @OneToMany(mappedBy = "vehicle")
     private List<Maintenance> maintenances;
+
+    //un veicolo può fare molti viaggi
     @OneToMany(mappedBy = "vehicle")
     private List<Trip> trips;
 

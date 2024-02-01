@@ -15,6 +15,8 @@ public class Maintenance {
     @Column(name = "end_date")
     private LocalDate endDate;
     private String description;
+
+    //molti macchine possono essere in manuntenzione
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;

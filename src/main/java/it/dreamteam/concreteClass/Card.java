@@ -14,9 +14,12 @@ public class Card {
 
     private LocalDate expirationDate;
 
+    //perche un utente pò avere più tessere (magari una è scaduta e una no)
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    //più abbonamenti possono essere associati ad una tessera (es. due abb. mensili scaduti ed uno settimanale attivo)
     @OneToMany(mappedBy = "card")
     private List<Subscription> subscriptions;
 

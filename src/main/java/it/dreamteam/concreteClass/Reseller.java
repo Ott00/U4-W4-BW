@@ -10,10 +10,6 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "reseller_type")
 @DiscriminatorValue("Authorized Reseller")
-//@NamedQuery(
-//        name = "numeroPuntoEmissione",
-//        query = "SELECT COUNT(t) FROM TravelDocument t WHERE t.emission_point.id = :id AND t.emission_date <= :emission_date"
-//)
 public class Reseller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +17,8 @@ public class Reseller {
     private Long id;
     protected String name;
     protected String address;
+
+    //un reseller può vendere molti biglietti
     @OneToMany(mappedBy = "emission_point")
     protected List<TravelDocument> travelDocuments;
 

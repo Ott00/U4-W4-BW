@@ -53,6 +53,8 @@ public class TripDAO {
         }
     }
 
+    // //il valore di ritorno di questa lista sarà un array di oggetti dato che non mi interessa tutta la
+    //    // tabella ma solo alcune colonne
     public List<Object[]> timeTrip(long vehicle_id) {
         TypedQuery<Object[]> query = em.createNamedQuery("timeTrip", Object[].class);
         query.setParameter("id", vehicle_id);
