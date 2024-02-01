@@ -19,7 +19,7 @@ public class VehicleDAO {
             transaction.begin();
             em.persist(vehicle);
             transaction.commit();
-            System.out.println("Veicolo di trasporto n. " + vehicle.getId() + " aggiunto con successo!");
+//            System.out.println("Veicolo di trasporto n. " + vehicle.getId() + " aggiunto con successo!");
         } catch (TransactionalException te) {
             System.err.println(te.getMessage());
         }

@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "routes")
+@NamedQuery(name = "findAllRoutes", query = "SELECT r.id, r.endAddress FROM Route r ORDER BY r.id ASC")
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

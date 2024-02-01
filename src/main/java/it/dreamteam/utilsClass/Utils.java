@@ -118,12 +118,13 @@ public class Utils {
         travelDocumentDAO.save(travelDocument1);
 
 
-        for (int j = 0; j < 2; j++) {
+        for (int j = 0; j < numberOfElement; j++) {
             Reseller reseller = resellerSupplier.get();
             Reseller resellerMachine = resellerMachineSupplier.get();
             resellerDAO.save(reseller);
             resellerDAO.save(resellerMachine);
 
+            //Rotte esistenti ma non percorse
             Route route = routeSupplier.get();
             routeDAO.save(route);
 
@@ -149,7 +150,7 @@ public class Utils {
                     getRandomEnum(Periodicity.class),
                     card
             );
-
+            //Rotte che sono state effettivamente percorse
             Route routeForTrip = routeSupplier.get();
             routeDAO.save(routeForTrip);
 

@@ -2,8 +2,8 @@ package it.dreamteam.DAO;
 
 
 import it.dreamteam.abstractClass.TravelDocument;
-import it.dreamteam.concreteClass.Reseller;
-import it.dreamteam.concreteClass.Ticket;
+import it.dreamteam.concreteClass.*;
+import it.dreamteam.enumClass.Periodicity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -19,13 +19,25 @@ public class TravelDocumentDAO {
         this.em = em;
     }
 
+    public TravelDocument createTicket(Reseller reseller, User user) {
+        TravelDocument ticket = new Ticket(reseller, user);
+        save(ticket);
+        return ticket;
+    }
+
+    public TravelDocument createSubscription(Reseller reseller, Periodicity periodicity, Card card) {
+        TravelDocument subscription = new Subscription(reseller, periodicity, card);
+        save(subscription);
+        return subscription;
+    }
+
     public void save(TravelDocument re) {
         try {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.persist(re);
             transaction.commit();
-            System.out.println("aggiunto document " + re.getId());
+//            System.out.println("aggiunto document " + re.getId());
         } catch (Exception e) {
             em.getTransaction().rollback();
 //                System.out.println(e.getMessage());
@@ -51,6 +63,16 @@ public class TravelDocumentDAO {
         }
     }
 
+    public void checkIfObliteratedAndObliterate(TravelDocument ticket) {
+        if (ticket instanceof Ticket) {
+            boolean obliterated = ((Ticket) ticket).isObliterated();
+            if (!obliterated) {
+                obliterateTicket(ticket);
+                System.out.println("Biglietto obliterato");
+            } else System.out.println("Biglietto già obliterato, comprane un altro!");
+        }
+    }
+
     public void obliterateTicket(TravelDocument ticket) {
         TravelDocument found = this.findid(ticket.getId());
         if (found instanceof Ticket) {
@@ -63,6 +85,12 @@ public class TravelDocumentDAO {
 
             System.out.println("Ticket obliterato");
         } else System.out.println("Gli abbonamenti non possono essere obliterati!");
+    }
+
+    public void checkCardOrSubscriptionExpired(Card card) {
+        if (findExpCard(card.getId()).isEmpty()) {
+            System.out.println("Benvenuto a bordo");
+        } else System.out.println("Il tuo abbonamento o la tessera sono scaduti!");
     }
 
     public Long findNumberTicketsPlace(Reseller emission_point, LocalDate emission_date) {

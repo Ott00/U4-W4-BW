@@ -4,7 +4,10 @@ import it.dreamteam.concreteClass.Route;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import javax.transaction.TransactionalException;
+import java.util.List;
+import java.util.Objects;
 
 public class RouteDAO {
     EntityManager em;
@@ -19,7 +22,7 @@ public class RouteDAO {
             transaction.begin();
             em.persist(route);
             transaction.commit();
-            System.out.println("Itinerario n. " + route.getId() + " aggiunto con successo!");
+//            System.out.println("Itinerario n. " + route.getId() + " aggiunto con successo!");
         } catch (TransactionalException te) {
             System.err.println(te.getMessage());
         }
@@ -42,5 +45,8 @@ public class RouteDAO {
         }
     }
 
-
+    public List<Object[]> findAllRoutes() {
+        TypedQuery<Object[]> query = em.createNamedQuery("findAllRoutes", Object[].class);
+        return query.getResultList();
+    }
 }

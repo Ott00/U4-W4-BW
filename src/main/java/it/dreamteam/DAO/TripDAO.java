@@ -21,7 +21,7 @@ public class TripDAO {
             transaction.begin();
             em.persist(trip);
             transaction.commit();
-            System.out.println("Viaggio n. " + trip.getId() + " aggiunto con successo!");
+//            System.out.println("Viaggio n. " + trip.getId() + " aggiunto con successo!");
         } catch (TransactionalException te) {
             System.err.println(te.getMessage());
         }
@@ -50,6 +50,7 @@ public class TripDAO {
         return query.getResultList();
 
     }
+
     public List<Object[]> Tripnumber(long vehicle_id) {
         TypedQuery<Object[]> query = em.createNamedQuery("Tripnumber", Object[].class);
         query.setParameter("id", vehicle_id);

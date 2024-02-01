@@ -19,7 +19,7 @@ public class MaintenanceDAO {
             transaction.begin();
             em.persist(maintenance);
             transaction.commit();
-            System.out.println("Manutenzione n. " + maintenance.getId() + " aggiunta con successo!");
+//            System.out.println("Manutenzione n. " + maintenance.getId() + " aggiunta con successo!");
         } catch (TransactionalException te) {
             System.err.println(te.getMessage());
         }

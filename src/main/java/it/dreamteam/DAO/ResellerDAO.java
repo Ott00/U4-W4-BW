@@ -12,13 +12,19 @@ public class ResellerDAO {
         this.em = em;
     }
 
+    public Reseller createReseller(String name, String address) {
+        Reseller reseller = new Reseller(name, address);
+        save(reseller);
+        return reseller;
+    }
+
     public void save(Reseller re) {
         try {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.persist(re);
             transaction.commit();
-            System.out.println("aggiunto reseller " + re.getId());
+//            System.out.println("aggiunto reseller " + re.getId());
         } catch (Exception e) {
             em.getTransaction().rollback();
             System.out.println(e.getMessage());
