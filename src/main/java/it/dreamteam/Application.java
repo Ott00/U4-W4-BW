@@ -31,9 +31,7 @@ public class Application {
         System.out.println();
 
         Reseller reseller = rd.createReseller("Tabacchino Epicode", "Via dei Magazzini Generali, 16, 00154 Roma RM");
-        for (int i = 0; i < 50; i++) {
-            System.out.println("\b");
-        }
+        
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Benvenuto, come ti chiami?");
@@ -85,7 +83,6 @@ public class Application {
 
         System.out.println("'" + name + " arriva alla stazione...'");
         System.out.println("Dove vuoi andare?");
-        int[] counter = {1};
         rtd.findAllRoutes().forEach(result -> System.out.println(result[0] + ") " + result[1]));
         int idRoute = Integer.parseInt(scanner.nextLine());
         System.out.println("Il bus per " + rtd.findById(idRoute).getEndAddress() + " arriverà a breve!");
@@ -93,7 +90,7 @@ public class Application {
         //Utilizziamo un veicolo già esistente
         Vehicle vehicle = vd.findById(2);
 
-        System.out.println("Veicolo arrivato...\n");
+        System.out.println("Il " + vehicle.getVehicleType().toString().toLowerCase() + " numero " + vehicle.getId() + " è arrivato...\n");
         System.out.println("'" + name + " sale sul bus'");
         System.out.println("'Il controllore chiede...'");
         System.out.println("Hai un...  \n1)Biglietto \n2)Abbonamento");
@@ -114,6 +111,9 @@ public class Application {
                 break;
         }
 
+        Trip trip = tr.createTrip(vehicle, rtd.findById(idRoute));
+        System.out.println("Dopo " + trip.getTripTime() + " siamo arrivati a " + rtd.findById(idRoute).getEndAddress());
+        System.out.println("Grazie per averci scelto, arrivederci!");
 
 //        System.out.println("**Test Query**");
 
@@ -141,10 +141,9 @@ public class Application {
 //
 //        System.out.println("Numero di volte che un mezzo percorre una tratta e del tempo effettivo di percorrenza di ogni tratta");
 //        tr.timeTrip(3).forEach(result -> System.out.println("Tempo del viaggio: " + result[0] + ", ID veicolo: " + result[1]));
-//        tr.Tripnumber(3).forEach(result->System.out.println("ID rotta "+result[0] + ", numero volte percorso " + result[1]));
+//        tr.tripNumber(3).forEach(result->System.out.println("ID rotta "+result[0] + ", numero volte percorso " + result[1]));
+        scanner.close();
         em.close();
         emf.close();
-
-
     }
 }

@@ -33,12 +33,12 @@ public class UserDAO {
         }
     }
 
-    public User findid(long id) {
+    public User findById(long id) {
         return em.find(User.class, id);
     }
 
     public void delete(long id) {
-        User found = this.findid(id);
+        User found = this.findById(id);
         if (found != null) {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();

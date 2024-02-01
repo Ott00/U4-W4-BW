@@ -1,6 +1,9 @@
 package it.dreamteam.DAO;
 
+import it.dreamteam.concreteClass.Route;
 import it.dreamteam.concreteClass.Trip;
+import it.dreamteam.concreteClass.Vehicle;
+import it.dreamteam.utilsClass.Utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -13,6 +16,12 @@ public class TripDAO {
 
     public TripDAO(EntityManager em) {
         this.em = em;
+    }
+
+    public Trip createTrip(Vehicle vehicle, Route route) {
+        Trip trip = new Trip(vehicle, route, Utils.generateRandomTime());
+        save(trip);
+        return trip;
     }
 
     public void save(Trip trip) {
@@ -51,8 +60,8 @@ public class TripDAO {
 
     }
 
-    public List<Object[]> Tripnumber(long vehicle_id) {
-        TypedQuery<Object[]> query = em.createNamedQuery("Tripnumber", Object[].class);
+    public List<Object[]> tripNumber(long vehicle_id) {
+        TypedQuery<Object[]> query = em.createNamedQuery("tripNumber", Object[].class);
         query.setParameter("id", vehicle_id);
         return query.getResultList();
     }

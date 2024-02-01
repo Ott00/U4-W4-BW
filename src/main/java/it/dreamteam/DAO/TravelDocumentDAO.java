@@ -46,12 +46,12 @@ public class TravelDocumentDAO {
     }
 
 
-    public TravelDocument findid(long id) {
+    public TravelDocument findById(long id) {
         return em.find(TravelDocument.class, id);
     }
 
     public void delete(long id) {
-        TravelDocument found = this.findid(id);
+        TravelDocument found = this.findById(id);
         if (found != null) {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
@@ -74,7 +74,7 @@ public class TravelDocumentDAO {
     }
 
     public void obliterateTicket(TravelDocument ticket) {
-        TravelDocument found = this.findid(ticket.getId());
+        TravelDocument found = this.findById(ticket.getId());
         if (found instanceof Ticket) {
             EntityTransaction transaction = em.getTransaction();
 

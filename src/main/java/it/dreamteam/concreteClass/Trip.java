@@ -9,8 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "trips")
-@NamedQuery(name="timeTrip", query = "SELECT t.tripTime,t.vehicle.id FROM Trip t WHERE t.vehicle.id=:id ")
-@NamedQuery(name="Tripnumber", query = "SELECT t.route.id,COUNT(t) FROM Trip t WHERE t.vehicle.id=:id GROUP BY t.route.id ")
+@NamedQuery(name = "timeTrip", query = "SELECT t.tripTime,t.vehicle.id FROM Trip t WHERE t.vehicle.id=:id ")
+@NamedQuery(name = "tripNumber", query = "SELECT t.route.id,COUNT(t) FROM Trip t WHERE t.vehicle.id=:id GROUP BY t.route.id ")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

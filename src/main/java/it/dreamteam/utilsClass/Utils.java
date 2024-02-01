@@ -75,8 +75,8 @@ public class Utils {
 
         //Route
         Supplier<Route> routeSupplier = () -> new Route(
-                faker.address().fullAddress(),
-                faker.address().fullAddress(),
+                faker.address().streetName() + " " + faker.address().buildingNumber(),
+                faker.address().streetName() + " " + faker.address().buildingNumber(),
                 generateRandomTime()
         );
 
