@@ -1,11 +1,12 @@
 package it.dreamteam.concreteClass;
 
 import it.dreamteam.abstractClass.TravelDocument;
+import it.dreamteam.enumClass.VehicleStatus;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "trips")
@@ -37,7 +38,7 @@ public class Trip {
             joinColumns = @JoinColumn(name = "trip_id"),
             inverseJoinColumns = @JoinColumn(name = "travelDocument_id")
     )
-    private Set<TravelDocument> travelDocument = new HashSet<>();
+    private List<TravelDocument> travelDocument = new ArrayList<>();
 
     public Trip() {
     }
@@ -45,8 +46,14 @@ public class Trip {
     public Trip(Vehicle vehicle, Route route, Time tripTime) {
         this.vehicle = vehicle;
         this.route = route;
-        this.tripTime = tripTime;
+        //nel caso il mezzo è in mununtenzione, la tratta non viene fatta perciò il tempo effettivo diventerà null
+        if (vehicle.getVehicleStatus() == VehicleStatus.IN_MANUTENZIONE) {
+            this.tripTime = null;
+        } else {
+            this.tripTime = tripTime;
+        }
     }
+
 
     public Long getId() {
         return id;
@@ -86,11 +93,11 @@ public class Trip {
                 '}';
     }
 
-    public Set<TravelDocument> getTravelDocument() {
+    public List<TravelDocument> getTravelDocument() {
         return travelDocument;
     }
 
-    public void setTravelDocument(Set<TravelDocument> travelDocument) {
+    public void setTravelDocument(List<TravelDocument> travelDocument) {
         this.travelDocument = travelDocument;
     }
 }

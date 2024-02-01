@@ -5,8 +5,8 @@ import it.dreamteam.concreteClass.Trip;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -38,7 +38,7 @@ public abstract class TravelDocument {
             joinColumns = @JoinColumn(name = "travelDocument_id"),
             inverseJoinColumns = @JoinColumn(name = "trip_id")
     )
-    private Set<Trip> trips = new HashSet<>();
+    private List<Trip> trips = new ArrayList<>();
 
 
     public TravelDocument() {
@@ -74,13 +74,11 @@ public abstract class TravelDocument {
         return emission_point;
     }
 
-    public Set<Trip> getTrips() {
+    public List<Trip> getTrips() {
         return trips;
     }
 
-    public void setTrips(Set<Trip> trips) {
+    public void setTrips(List<Trip> trips) {
         this.trips = trips;
     }
-
-
 }
