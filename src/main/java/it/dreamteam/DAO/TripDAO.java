@@ -50,11 +50,10 @@ public class TripDAO {
         return query.getResultList();
 
     }
-    public Long Tripnumber(long vehicle_id) {
-        TypedQuery<Long> query = em.createNamedQuery("Tripnumber", Long.class);
+    public List<Object[]> Tripnumber(long vehicle_id) {
+        TypedQuery<Object[]> query = em.createNamedQuery("Tripnumber", Object[].class);
         query.setParameter("id", vehicle_id);
-        return query.getSingleResult();
-
+        return query.getResultList();
     }
 
 
