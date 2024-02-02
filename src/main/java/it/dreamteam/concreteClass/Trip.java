@@ -13,7 +13,7 @@ import java.util.List;
 //va a selezionare iltempo effettivo di percorrenza e l'id del veicolo in base ad una veicolo
 @NamedQuery(name = "timeTrip", query = "SELECT t.tripTime,t.vehicle.id FROM Trip t WHERE t.vehicle.id=:id ")
 //va a contare il numero di volte che un veicolo percorre una route e le ragruppa in base all'id della rotta
-@NamedQuery(name = "tripNumber", query = "SELECT t.route.id,COUNT(t) FROM Trip t WHERE t.vehicle.id=:id GROUP BY t.route.id ")
+@NamedQuery(name = "tripNumber", query = "SELECT t.route.id,COUNT(t) FROM Trip t WHERE t.vehicle.id=:id AND t.vehicle.vehicleStatus='IN_SERVIZIO' GROUP BY t.route.id ")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
