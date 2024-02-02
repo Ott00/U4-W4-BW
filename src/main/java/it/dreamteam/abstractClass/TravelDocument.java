@@ -2,6 +2,7 @@ package it.dreamteam.abstractClass;
 
 import it.dreamteam.concreteClass.Reseller;
 import it.dreamteam.concreteClass.Trip;
+import it.dreamteam.concreteClass.Vehicle;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import java.util.List;
 @NamedQuery(name = "numberEmissionPoint", query = "SELECT COUNT(a) FROM TravelDocument a WHERE a.emission_point = :emission_point AND a.emission_date < :emission_date ")
 //in questa query mi vado a contare il numero di traveldocument usando una JOIN per spostarmi alla tabella Trips, di nuovo join per spostarmi su Vehicle dove potrò prendermi il su id e usarlo come
 //parametro insieme al obliterated che deve essere true
-@NamedQuery(name = "numberOfTicketObliteratedInAVehicle", query = "SELECT COUNT(td) FROM TravelDocument td JOIN td.trips t JOIN t.vehicle v WHERE v.id = :vehicle_id AND td.obliterated = true")
+@NamedQuery(name = "numberOfTicketObliteratedInAVehicle", query = "SELECT COUNT(td) FROM TravelDocument td JOIN td.trips t JOIN t.vehicle v WHERE v.id = :vehicle_id ")
 public abstract class TravelDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +41,9 @@ public abstract class TravelDocument {
     )
     private List<Trip> trips = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
     public TravelDocument() {
     }
@@ -82,6 +86,11 @@ public abstract class TravelDocument {
         this.trips = trips;
     }
 
-
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+        if (!vehicle.getTravelDocuments().contains(this)) {
+            vehicle.getTravelDocuments().add(this);
+        }
+    }
 
 }

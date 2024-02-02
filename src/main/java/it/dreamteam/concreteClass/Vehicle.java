@@ -1,9 +1,11 @@
 package it.dreamteam.concreteClass;
 
+import it.dreamteam.abstractClass.TravelDocument;
 import it.dreamteam.enumClass.VehicleStatus;
 import it.dreamteam.enumClass.VehicleType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +30,9 @@ public class Vehicle {
     //un veicolo può fare molti viaggi
     @OneToMany(mappedBy = "vehicle")
     private List<Trip> trips;
+
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
+    private List<TravelDocument> travelDocuments = new ArrayList<>();
 
     public Vehicle() {
     }
@@ -92,5 +97,19 @@ public class Vehicle {
                 ", maintenances=" + maintenances +
                 ", trips=" + trips.size() +
                 '}';
+    }
+
+    public List<TravelDocument> getTravelDocuments() {
+        return travelDocuments;
+    }
+
+    public void setTravelDocuments(List<TravelDocument> travelDocuments) {
+        this.travelDocuments = travelDocuments;
+    }
+
+
+    public void addTravelDocument(TravelDocument travelDocument) {
+        this.travelDocuments.add(travelDocument);
+        travelDocument.setVehicle(this);
     }
 }

@@ -171,6 +171,7 @@ public class Utils {
 
                 //Ticket
                 TravelDocument ticket = new Ticket(reseller, user2);
+                vehicleForTrip.addTravelDocument(ticket);
 
                 //Subscription
                 TravelDocument subscription = new Subscription(
@@ -186,12 +187,16 @@ public class Utils {
 
                     //aggiungo la subscription ad un viaggio
                     trip.getTravelDocument().add(subscription);
+                    vehicleForTrip.addTravelDocument(subscription);
                     travelDocumentDAO.save(subscription);
 
                     //aggiungo il ticket ad un viaggio nel caso questo non è ancora stato obliterato
                     if (((Ticket) ticket).isObliterated() == false) {
                         trip.getTravelDocument().add(ticket);
-                        ((Ticket) ticket).setObliterated(true);
+//                        trip.getTravelDocument().add(ticket);
+//                       ((Ticket) ticket).setObliterated(true);
+                        vehicleForTrip.addTravelDocument(ticket);
+                        travelDocumentDAO.obliterateTicket(ticket);
                         travelDocumentDAO.save(ticket);
 
                     } else {
