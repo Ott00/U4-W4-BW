@@ -18,6 +18,9 @@ import java.util.List;
 //in questa query mi vado a contare il numero di traveldocument usando una JOIN per spostarmi alla tabella Trips, di nuovo join per spostarmi su Vehicle dove potrò prendermi il su id e usarlo come
 //parametro insieme al obliterated che deve essere true
 @NamedQuery(name = "numberOfTicketObliteratedInAVehicle", query = "SELECT COUNT(td) FROM TravelDocument td JOIN td.trips t JOIN t.vehicle v WHERE v.id = :vehicle_id AND td.obliterated = true")
+//vado a vedere il numero di ticket e subscription in un veicolo
+@NamedQuery(name = "numberOfTicketandSubAVehicle", query = "SELECT COUNT(td) FROM TravelDocument td JOIN td.trips t JOIN t.vehicle v WHERE v.id = :vehicle_id AND td.expirationDate < CURRENT_DATE ")
+
 public abstract class TravelDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

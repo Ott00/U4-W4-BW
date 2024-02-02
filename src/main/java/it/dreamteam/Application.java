@@ -151,17 +151,15 @@ public class Application {
 //        System.out.println(td.findNumberTicketsPlace(rd.findById(2), LocalDate.of(2024, 10, 1)));
 //        System.out.println();
 //
-//        System.out.println("Numero di biglietti vidimati su un particolare mezzo o in totale in un periodo di tempo");
-//
+//        System.out.println("Numero di biglietti vidimati su un particolare mezzo");
 //        //Oblitero dei ticket manualmente per verificare la query
 //        TravelDocument ticket = td.findById(2);
 //        td.obliterateTicket(ticket);
 //
-//        TravelDocument ticket2 = td.findById(4);
-//        td.obliterateTicket(ticket2);
-//
-//        System.out.println(td.numberOfTicketObliteratedInAVehicle(3));
+//        System.out.println("----solo i biglietti-----");
 //        System.out.println(td.numberOfTicketObliteratedInAVehicle(5));
+//        System.out.println("---- biglietti e abbonamenti-----");
+//        System.out.println(td.numberOfTicketandSubAVehicle(5));
 //        System.out.println();
 //
 //        //nel caso lo status del veicolo è in manuntenzione, questo allora non percorre nessuna rotta perciò non viene stampata questa query

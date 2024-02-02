@@ -117,5 +117,10 @@ public class TravelDocumentDAO {
         query.setParameter("vehicle_id", vehicle_id);
         return query.getSingleResult();
     }
+    public Long numberOfTicketandSubAVehicle(long vehicle_id) {
+        TypedQuery<Long> query = em.createNamedQuery("numberOfTicketandSubAVehicle", Long.class);
+        query.setParameter("vehicle_id", vehicle_id);
+        return query.getSingleResult();
+    }
 
 }
