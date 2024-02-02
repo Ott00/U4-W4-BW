@@ -169,15 +169,7 @@ public class Utils {
             Card card = new Card(user);
             cardDAO.save(card);
 
-            //Ticket
-            TravelDocument ticket = new Ticket(reseller, user2);
 
-            //Subscription
-            TravelDocument subscription = new Subscription(
-                    reseller,
-                    getRandomEnum(Periodicity.class),
-                    card
-            );
 
             //Rotte che sono state effettivamente percorse
             Route routeForTrip = routeSupplier.get();
@@ -197,22 +189,38 @@ public class Utils {
                 maintenanceDAO.save(maintenance1);
             }
 
-            Trip trip = new Trip(vehicleForTrip, routeForTrip, generateRandomTime());
-            tripDAO.save(trip);
+            //Ticket
+            TravelDocument ticket = new Ticket(reseller, user2);
 
-            //aggiungo la subscription ad un viaggio
-            trip.getTravelDocument().add(subscription);
+            //Subscription
+            TravelDocument subscription = new Subscription(
+                    reseller,
+                    getRandomEnum(Periodicity.class),
+                    card
+            );
 
-            //aggiungo il ticket ad un viaggio nel caso questo non è ancora stato obliterato
-            if (((Ticket) ticket).isObliterated() == false) {
-                trip.getTravelDocument().add(ticket);
-                ((Ticket) ticket).setObliterated(true);
-            } else {
-                System.out.println("Il ticket è già stato obliterato, devi comprarne un'altro");
+            if (vehicleForTrip.getVehicleStatus() != VehicleStatus.IN_MANUTENZIONE) {
+
+                Trip trip = new Trip(vehicleForTrip, routeForTrip, generateRandomTime());
+                tripDAO.save(trip);
+
+
+                //aggiungo la subscription ad un viaggio
+                trip.getTravelDocument().add(subscription);
+                travelDocumentDAO.save(subscription);
+
+                //aggiungo il ticket ad un viaggio nel caso questo non è ancora stato obliterato
+                if (((Ticket) ticket).isObliterated() == false) {
+                    trip.getTravelDocument().add(ticket);
+                    ((Ticket) ticket).setObliterated(true);
+                    travelDocumentDAO.save(ticket);
+
+                } else {
+                    System.out.println("Il ticket è già stato obliterato, devi comprarne un'altro");
+                }
+
             }
 
-            travelDocumentDAO.save(ticket);
-            travelDocumentDAO.save(subscription);
 
         }
     }
