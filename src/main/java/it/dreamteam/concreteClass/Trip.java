@@ -100,4 +100,5 @@ public class Trip {
     public void setTravelDocument(List<TravelDocument> travelDocument) {
         this.travelDocument = travelDocument;
     }
+
 }

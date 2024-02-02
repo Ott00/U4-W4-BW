@@ -87,21 +87,6 @@ public class Utils {
                 getRandomEnum(VehicleStatus.class)
         );
 
-        //Maintenance
-//        Vehicle vehicleInMaintenance = new Vehicle(getRandomEnum(VehicleType.class),
-//                faker.number().numberBetween(40, 60),
-//                VehicleStatus.IN_MANUTENZIONE);
-
-//        vehicleDAO.save(vehicleInMaintenance);
-
-//        Maintenance maintenance = new Maintenance(
-//                LocalDate.now().plusDays(7),
-//                faker.lorem().sentence(10),
-//                vehicleInMaintenance
-//        );
-
-//        maintenanceDAO.save(maintenance);
-
         //card scaduta test
         User user1 = userSupplier.get();
         userDAO.save(user1);
@@ -118,110 +103,107 @@ public class Utils {
                 card1
         );
         travelDocumentDAO.save(travelDocument1);
-
-        for (int j = 0; j < numberOfElement; j++) {
+        for (int j = 0; j < 2; j++) {
             Reseller reseller = resellerSupplier.get();
             Reseller resellerMachine = resellerMachineSupplier.get();
             resellerDAO.save(reseller);
             resellerDAO.save(resellerMachine);
 
-            User user = userSupplier.get();
-            userDAO.save(user);
+            for (int a = 0; a < numberOfElement; a++) {
 
-            User user2 = userSupplier.get();
-            userDAO.save(user2);
+                User user = userSupplier.get();
+                userDAO.save(user);
 
-            Card card = new Card(user);
-            cardDAO.save(card);
+                User user2 = userSupplier.get();
+                userDAO.save(user2);
 
-            TravelDocument ticket1 = new Ticket(reseller, user2);
+                Card card = new Card(user);
+                cardDAO.save(card);
 
-            TravelDocument subscription1 = new Subscription(
-                    reseller,
-                    getRandomEnum(Periodicity.class),
-                    card
-            );
+                TravelDocument ticket1 = new Ticket(reseller, user2);
 
-            travelDocumentDAO.save(ticket1);
-            travelDocumentDAO.save(subscription1);
-        }
-
-
-        for (int j = 0; j < numberOfElement; j++) {
-            Reseller reseller = resellerSupplier.get();
-            Reseller resellerMachine = resellerMachineSupplier.get();
-            resellerDAO.save(reseller);
-            resellerDAO.save(resellerMachine);
-
-            //Rotte esistenti ma non percorse
-            Route route = routeSupplier.get();
-            routeDAO.save(route);
-
-            //User Subscription
-            User user = userSupplier.get();
-            userDAO.save(user);
-
-            //User Ticket
-            User user2 = userSupplier.get();
-            userDAO.save(user2);
-
-            //Card
-            Card card = new Card(user);
-            cardDAO.save(card);
-
-
-
-            //Rotte che sono state effettivamente percorse
-            Route routeForTrip = routeSupplier.get();
-            routeDAO.save(routeForTrip);
-
-            Vehicle vehicleForTrip = vehicleSupplier.get();
-            vehicleDAO.save(vehicleForTrip);
-
-            //nel caso il veicolo avesse problemi allora lo registriamo in manuntenzione
-            if (vehicleForTrip.getVehicleStatus() == VehicleStatus.IN_MANUTENZIONE) {
-
-                Maintenance maintenance1 = new Maintenance(
-                        LocalDate.now().plusDays(7),
-                        faker.lorem().sentence(10),
-                        vehicleForTrip
+                TravelDocument subscription1 = new Subscription(
+                        reseller,
+                        getRandomEnum(Periodicity.class),
+                        card
                 );
-                maintenanceDAO.save(maintenance1);
+
+                travelDocumentDAO.save(ticket1);
+                travelDocumentDAO.save(subscription1);
             }
 
-            //Ticket
-            TravelDocument ticket = new Ticket(reseller, user2);
+            for (int c = 0; c < numberOfElement; c++) {
 
-            //Subscription
-            TravelDocument subscription = new Subscription(
-                    reseller,
-                    getRandomEnum(Periodicity.class),
-                    card
-            );
+                //Rotte esistenti ma non percorse
+                Route route = routeSupplier.get();
+                routeDAO.save(route);
 
-            if (vehicleForTrip.getVehicleStatus() != VehicleStatus.IN_MANUTENZIONE) {
+                //User Subscription
+                User user = userSupplier.get();
+                userDAO.save(user);
 
-                Trip trip = new Trip(vehicleForTrip, routeForTrip, generateRandomTime());
-                tripDAO.save(trip);
+                //User Ticket
+                User user2 = userSupplier.get();
+                userDAO.save(user2);
+
+                //Card
+                Card card = new Card(user);
+                cardDAO.save(card);
 
 
-                //aggiungo la subscription ad un viaggio
-                trip.getTravelDocument().add(subscription);
-                travelDocumentDAO.save(subscription);
+                //Rotte che sono state effettivamente percorse
+                Route routeForTrip = routeSupplier.get();
+                routeDAO.save(routeForTrip);
 
-                //aggiungo il ticket ad un viaggio nel caso questo non è ancora stato obliterato
-                if (((Ticket) ticket).isObliterated() == false) {
-                    trip.getTravelDocument().add(ticket);
-                    ((Ticket) ticket).setObliterated(true);
-                    travelDocumentDAO.save(ticket);
+                Vehicle vehicleForTrip = vehicleSupplier.get();
+                vehicleDAO.save(vehicleForTrip);
 
-                } else {
-                    System.out.println("Il ticket è già stato obliterato, devi comprarne un'altro");
+                //nel caso il veicolo avesse problemi allora lo registriamo in manuntenzione
+                if (vehicleForTrip.getVehicleStatus() == VehicleStatus.IN_MANUTENZIONE) {
+
+                    Maintenance maintenance1 = new Maintenance(
+                            LocalDate.now().plusDays(7),
+                            faker.lorem().sentence(10),
+                            vehicleForTrip
+                    );
+                    maintenanceDAO.save(maintenance1);
                 }
 
+                //Ticket
+                TravelDocument ticket = new Ticket(reseller, user2);
+
+                //Subscription
+                TravelDocument subscription = new Subscription(
+                        reseller,
+                        getRandomEnum(Periodicity.class),
+                        card
+                );
+
+                if (vehicleForTrip.getVehicleStatus() != VehicleStatus.IN_MANUTENZIONE) {
+
+                    Trip trip = new Trip(vehicleForTrip, routeForTrip, generateRandomTime());
+                    tripDAO.save(trip);
+
+                    //aggiungo la subscription ad un viaggio
+                    trip.getTravelDocument().add(subscription);
+                    travelDocumentDAO.save(subscription);
+
+                    //aggiungo il ticket ad un viaggio nel caso questo non è ancora stato obliterato
+                    if (((Ticket) ticket).isObliterated() == false) {
+                        trip.getTravelDocument().add(ticket);
+                        ((Ticket) ticket).setObliterated(true);
+                        travelDocumentDAO.save(ticket);
+
+                    } else {
+                        System.out.println("Il ticket è già stato obliterato, devi comprarne un'altro");
+                    }
+
+                }
+
+
             }
-
-
         }
+
+
     }
 }

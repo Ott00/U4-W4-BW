@@ -81,4 +81,7 @@ public abstract class TravelDocument {
     public void setTrips(List<Trip> trips) {
         this.trips = trips;
     }
+
+
+
 }
